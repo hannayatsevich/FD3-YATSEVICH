@@ -1,3 +1,5 @@
+'use strict'
+
 let shopName = 'White Moon';
 let tableHeadNames = ['Name', 'Article', 'Category', 'Price', 'In stock', 'Image'];
 let shopGoods = [
@@ -10,8 +12,7 @@ let shopGoods = [
   {itemName: 'Sugar bowl', itemNumber: 106, itemCategory: 'Morning drink', price: '50', imgUrl: 'img/Sugarbowl.jpg', inStock: 20},
   {itemName: 'Soup bowl', itemNumber: 200, itemCategory: 'Lunchtime', price: '250', imgUrl: 'img/Soupbowl.jpg', inStock: 50},
   {itemName: 'Salad bowl', itemNumber: 201, itemCategory: 'Lunchtime', price: '150', imgUrl: 'img/Saladbowl.jpg', inStock: 30},
-  {itemName: 'Dinner plate', itemNumber: 202, itemCategory: 'Lunchtime', price: '200', imgUrl: 'img/Dinnerplate.jpg', inStock: 100},
- 
+  {itemName: 'Dinner plate', itemNumber: 202, itemCategory: 'Lunchtime', price: '200', imgUrl: 'img/Dinnerplate.jpg', inStock: 100}, 
 ];
 
 ReactDOM.render(
