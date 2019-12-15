@@ -1,0 +1,16 @@
+.ItemBlockSelected{
+  background-color: #a9bd89;
+  font-weight: 600;
+}
+.ItemBlockSelected td, .ItemBlock td{
+  border: 2px solid black;
+  padding: 3px;
+  width: calc(100%/7);
+  text-align: center;
+}
+.ItemBlockSelected .ItemImg,.ItemBlock .ItemImg{
+  width: 100%;
+}
+.ItemBlockSelected .DeleteBtn input{
+  font-weight: 600;
+}

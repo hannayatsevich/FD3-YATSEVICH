@@ -1,0 +1,32 @@
+.IShop{
+  background-color: #c2b898;
+  margin: 0 auto;
+  padding: 10px;
+  width: fit-content;/*Наибольшее из: внутренняя минимальная ширина / меньшая из внутренней предпочтительной ширины и доступной ширины*/
+  text-align: center;
+  height: fit-content;/*Наибольшее из: внутренняя минимальная высота / меньшая из внутренней предпочтительной высоты и доступной высоты*/
+}
+.IShop .ShopName{
+  font-weight: bold;
+  padding: 10px;
+}
+.IShop .GoodsTable{
+  border-collapse: collapse;/*убирает двойные рамки, border-spacing не работает в этом случае*/
+  border: 2px solid black;
+  margin: 5px auto;
+  text-align: left;
+  width: 90%;
+}
+.IShop .TableHead{
+  font-weight: bold;
+  background-color: #adaba2;
+}
+.IShop .TableBody{
+  background-color: #d4d4d1;
+}
+.IShop .TableHead td{
+  border: 2px solid black;
+  padding: 3px;
+  width: calc(100%/7);
+  text-align: center;
+}
