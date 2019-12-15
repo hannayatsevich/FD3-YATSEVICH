@@ -1,0 +1,17 @@
+.FilterBlock{
+  width: 30%;
+  margin: 0 auto;
+}
+.FilterBlock .SearchBlock{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.FilterBlock .SearchBlock input[type='text']{
+  width: 70%;
+}
+.FilterBlock .SelectBlock{
+  width: 100%;
+  height: 15vmin;
+  margin-top: 10px;
+}
