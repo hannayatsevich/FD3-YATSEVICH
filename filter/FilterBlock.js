@@ -49,6 +49,7 @@ let FilterBlock = React.createClass({
 
   clearChexboxAndTextInput: function() {
     this.setState( {itemNamesForFilterArr: this.props.itemNamesForFilter, checkboxState: this.props.initCheckboxState || false, textEntered: ''});
+    this.setSortedArr(this.props.itemNamesForFilter);
   },
 
   componentWillMount: function() {
