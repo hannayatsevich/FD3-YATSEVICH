@@ -11,20 +11,28 @@ let FilterBlock = React.createClass({
       })
     ).isRequired,//массив строк для фильтрации
     initCheckboxState: React.PropTypes.bool,//начальное состояние чекбокса
+    initFilterState: React.PropTypes.string,//начальное состояние фильтра
   },
 
   getInitialState: function() {
     return {
-      itemNamesForFilterArr: this.props.itemNamesForFilter,//текущий массив строк
-      itemNamesForFilterArrSorted: null,//отсортированный по алфавиту текущий массив строк
       checkboxState: this.props.initCheckboxState || false,//состояние чекбокса, если не передано, то false
-      textEntered: '',//текст в текстовом поле
+      filterState: this.props.initFilterState ||'',//текст в текстовом поле, если не передан, то ''
+      itemNamesFilteredSortedArr: [],//текущий отфильтрованный и отсортированный массив
     }
   },
 
-  setSortedArr: function(arr) {
-    let sortedArr = JSON.parse(JSON.stringify(arr)).sort(this.sortItemsNames);
-    this.setState( {itemNamesForFilterArrSorted: sortedArr});
+  getItemNamesFilteredSortedArr: function(isSorted, filterText) {
+    let arrFilteredSorted = this.props.itemNamesForFilter;
+    if (filterText)
+      arrFilteredSorted = arrFilteredSorted.filter(value => {
+          return value.itemName.toLowerCase().indexOf(filterText) !== -1;
+        }
+      );
+    if (isSorted)
+      arrFilteredSorted = JSON.parse(JSON.stringify(arrFilteredSorted)).sort(this.sortItemsNames);
+    //this.setState( {itemNamesFilteredSortedArr: arrFilteredSorted});
+    this.setState( {checkboxState: isSorted, filterState: filterText, itemNamesFilteredSortedArr: arrFilteredSorted});
   },
 
   sortItemsNames: function(a, b) {
@@ -33,36 +41,27 @@ let FilterBlock = React.createClass({
     return 0;
   },
 
-  changeCheckboxState: function() {
-    this.setState( (curState, props) => ({checkboxState: !(curState.checkboxState)}));    
+  changeCheckboxState: function(EO) {
+    //this.setState({checkboxState: EO.target.checked}, this.getItemNamesFilteredSortedArr(this.state.checkboxState, this.state.filterState));
+    this.getItemNamesFilteredSortedArr(EO.target.checked, this.state.filterState);
   },
 
   textInputChanged: function(EO) {
-    let arrFiltered = this.props.itemNamesForFilter.filter(
-      value => {
-        return value.itemName.toLowerCase().indexOf(EO.target.value) !== -1;
-      }
-    );
-    this.setState( {itemNamesForFilterArr: arrFiltered, textEntered: EO.target.value});
-    this.setSortedArr(arrFiltered);
+    //this.setState( {filterState: EO.target.value}, this.getItemNamesFilteredSortedArr(this.state.checkboxState, this.state.filterState));
+    this.getItemNamesFilteredSortedArr(this.state.checkboxState, EO.target.value.toString())
   },
 
   clearChexboxAndTextInput: function() {
-    this.setState( {itemNamesForFilterArr: this.props.itemNamesForFilter, checkboxState: this.props.initCheckboxState || false, textEntered: ''});
-    this.setSortedArr(this.props.itemNamesForFilter);
+    //this.setState( {checkboxState: false, filterState: ''}, this.getItemNamesFilteredSortedArr(this.state.checkboxState, this.state.filterState));
+    this.getItemNamesFilteredSortedArr(false, '')
   },
 
-  componentWillMount: function() {
-    if (!this.state.itemNamesForFilterArrSorted) {
-      this.setSortedArr(this.state.itemNamesForFilterArr);
-    };
+  componentDidMount: function() {
+    this.getItemNamesFilteredSortedArr(this.state.checkboxState, this.state.filterState);
   },
 
   render: function() {
-    let renderArray = this.state.checkboxState ? this.state.itemNamesForFilterArrSorted : this.state.itemNamesForFilterArr;
-
-    let optionsArray = renderArray.map(
-      value => {
+    let optionsArray = this.state.itemNamesFilteredSortedArr.map(value => {
         return React.DOM.option({key: value.itemNumber}, value.itemName)
       }
     );
@@ -70,7 +69,7 @@ let FilterBlock = React.createClass({
     return React.DOM.div({className: 'FilterBlock'},
       React.DOM.div({className: 'SearchBlock'}, 
         React.DOM.input({type: 'checkbox', checked: this.state.checkboxState, onChange: this.changeCheckboxState}),
-        React.DOM.input({type: 'text', value: this.state.textEntered, onChange: this.textInputChanged}),
+        React.DOM.input({type: 'text', value: this.state.filterState, onChange: this.textInputChanged}),
         React.DOM.input({type: 'button', value: 'clear', onClick: this.clearChexboxAndTextInput}),
       ),
       React.DOM.select({className: 'SelectBlock', multiple: true}, optionsArray),      

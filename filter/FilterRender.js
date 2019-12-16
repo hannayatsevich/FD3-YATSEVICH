@@ -13,6 +13,6 @@ let itemNames = [
   {itemName: 'Dinner plate', itemNumber: 202}, 
 ];
 ReactDOM.render(
-  React.createElement(FilterBlock, {itemNamesForFilter: itemNames, initCheckboxState: false}),
+  React.createElement(FilterBlock, {itemNamesForFilter: itemNames, initCheckboxState: true, initFilterState: 'se'}),
   document.getElementById('filtercontainer')
 );
