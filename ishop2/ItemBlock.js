@@ -18,7 +18,8 @@ let ItemBlock = React.createClass({
   itemForDelete: function(EO) {
     EO.stopPropagation();
     let deleteAnswer = confirm(`Do you want to delete article ${this.props.itemNumber} ${this.props.itemName}?`);
-    deleteAnswer ? this.props.cbDeleteItem(this.props.itemNumber) : null;
+    if (deleteAnswer)
+      this.props.cbDeleteItem(this.props.itemNumber);
   },
 
   chooseItem: function(EO) {
