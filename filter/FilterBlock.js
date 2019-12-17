@@ -22,17 +22,16 @@ let FilterBlock = React.createClass({
     }
   },
 
-  getItemNamesFilteredSortedArr: function(isSorted, filterText) {
+  getItemNamesFilteredSortedArr: function() {
     let arrFilteredSorted = this.props.itemNamesForFilter;
-    if (filterText)
+    if (this.state.filterState)
       arrFilteredSorted = arrFilteredSorted.filter(value => {
-          return value.itemName.toLowerCase().indexOf(filterText) !== -1;
+          return value.itemName.toLowerCase().indexOf(this.state.filterState) !== -1;
         }
       );
-    if (isSorted)
+    if (this.state.checkboxState)
       arrFilteredSorted = JSON.parse(JSON.stringify(arrFilteredSorted)).sort(this.sortItemsNames);
-    //this.setState( {itemNamesFilteredSortedArr: arrFilteredSorted});
-    this.setState( {checkboxState: isSorted, filterState: filterText, itemNamesFilteredSortedArr: arrFilteredSorted});
+    this.setState( {itemNamesFilteredSortedArr: arrFilteredSorted});
   },
 
   sortItemsNames: function(a, b) {
@@ -42,22 +41,19 @@ let FilterBlock = React.createClass({
   },
 
   changeCheckboxState: function(EO) {
-    //this.setState({checkboxState: EO.target.checked}, this.getItemNamesFilteredSortedArr(this.state.checkboxState, this.state.filterState));
-    this.getItemNamesFilteredSortedArr(EO.target.checked, this.state.filterState);
+    this.setState({checkboxState: EO.target.checked}, this.getItemNamesFilteredSortedArr);
   },
 
   textInputChanged: function(EO) {
-    //this.setState( {filterState: EO.target.value}, this.getItemNamesFilteredSortedArr(this.state.checkboxState, this.state.filterState));
-    this.getItemNamesFilteredSortedArr(this.state.checkboxState, EO.target.value.toString())
+    this.setState( {filterState: EO.target.value}, this.getItemNamesFilteredSortedArr);
   },
 
   clearChexboxAndTextInput: function() {
-    //this.setState( {checkboxState: false, filterState: ''}, this.getItemNamesFilteredSortedArr(this.state.checkboxState, this.state.filterState));
-    this.getItemNamesFilteredSortedArr(false, '')
+    this.setState( {checkboxState: false, filterState: ''}, this.getItemNamesFilteredSortedArr);
   },
 
   componentDidMount: function() {
-    this.getItemNamesFilteredSortedArr(this.state.checkboxState, this.state.filterState);
+    this.getItemNamesFilteredSortedArr();
   },
 
   render: function() {
