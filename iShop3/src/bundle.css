@@ -1,0 +1,82 @@
+.IShop{
+  position: relative;
+  background-color: #c2b898;
+  margin: 0 auto;
+  padding: 10px;
+  width: fit-content;/*Наибольшее из: внутренняя минимальная ширина / меньшая из внутренней предпочтительной ширины и доступной ширины*/
+  text-align: center;
+  height: fit-content;/*Наибольшее из: внутренняя минимальная высота / меньшая из внутренней предпочтительной высоты и доступной высоты*/
+}
+.IShop .ShopName{
+  font-weight: bold;
+  padding: 10px;
+}
+.IShop .GoodsTable, .IShop .GoodsTableEditMode{
+  border-collapse: collapse;/*убирает двойные рамки, border-spacing не работает в этом случае*/
+  border: 2px solid black;
+  text-align: left;
+}
+.IShop .GoodsTable{
+  width: 90%;
+  margin: 5px auto;
+}
+.IShop .GoodsTableEditMode{
+  width: 65%;
+  margin: 5px;
+}
+.IShop .TableHead{
+  font-weight: bold;
+  background-color: #adaba2;
+}
+.IShop .TableBody{
+  background-color: #d4d4d1;
+}
+.IShop .TableHead td{
+  border: 2px solid black;
+  padding: 3px;
+  width: calc(100%/7);
+  text-align: center;
+}.ItemBlockSelected{
+  background-color: #a9bd89;
+  font-weight: 600;
+}
+.ItemBlockSelected td, .ItemBlock td{
+  border: 2px solid black;
+  padding: 3px;
+  width: calc(100%/7);
+  text-align: center;
+}
+.ItemBlockSelected .ItemImg,.ItemBlock .ItemImg{
+  width: 100%;
+}
+.ItemBlockSelected .DeleteBtn input{
+  font-weight: 600;
+}.ItemCardBlock{
+  position: absolute;
+  top: 56px;
+  right: 25px;
+  width: 27%;
+  border: solid black 2px;
+  background-color: #d4d4d1;
+}
+.ItemCardBlock > img{
+  width: 50%;
+  margin: 0;
+  padding-top: 5px;
+}
+.ItemCardBlock > p, .ItemCardBlock > h3, .ItemCardBlock > label{
+  margin: 0;
+  padding-top: 5px;
+  width: 100%;
+}
+.ItemCardBlock > p > label{
+  width: 100%;
+}
+.ItemCardBlock > p > label > input{
+  margin-right: 5px;
+  width: 60%;
+}
+.ItemCardBlock > input{
+  margin: 5px;
+}
+/*# sourceMappingURL=bundle.css.map*/

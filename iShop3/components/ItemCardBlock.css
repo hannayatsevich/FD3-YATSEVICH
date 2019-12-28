@@ -1,0 +1,28 @@
+.ItemCardBlock{
+  position: absolute;
+  top: 56px;
+  right: 25px;
+  width: 27%;
+  border: solid black 2px;
+  background-color: #d4d4d1;
+}
+.ItemCardBlock > img{
+  width: 50%;
+  margin: 0;
+  padding-top: 5px;
+}
+.ItemCardBlock > p, .ItemCardBlock > h3, .ItemCardBlock > label{
+  margin: 0;
+  padding-top: 5px;
+  width: 100%;
+}
+.ItemCardBlock > p > label{
+  width: 100%;
+}
+.ItemCardBlock > p > label > input{
+  margin-right: 5px;
+  width: 60%;
+}
+.ItemCardBlock > input{
+  margin: 5px;
+}
