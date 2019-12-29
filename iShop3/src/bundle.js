@@ -533,8 +533,9 @@ var ItemCardBlock = function (_React$Component) {
         itemNameErr = 'Please, fill this field - string, min length - 5 chars';
         isValid = false;
       };
-      if (_this.props.cardName === 'Add new item' && (_this.state.itemNumber === 0 || _this.state.itemNumber === '' || _this.state.existingNumbers.indexOf(Number(_this.state.itemNumber)) !== -1 || isNaN(Number(_this.state.itemNumber)) || _this.state.itemNumber.length < 3)) {
-        if (_this.state.existingNumbers.indexOf(Number(_this.state.itemNumber)) !== -1) itemNumberErr = 'This article already exists';else itemNumberErr = 'Please, fill this field - number, min length - 3 chars';
+      var itemNum = Number(_this.state.itemNumber);
+      if (_this.state.cardName === 'Add new item' && (itemNum === 0 || _this.state.itemNumber.length < 3 || _this.state.existingNumbers.indexOf(itemNum) !== -1 || isNaN(itemNum))) {
+        if (_this.state.existingNumbers.indexOf(itemNum) !== -1) itemNumberErr = 'This article already exists';else itemNumberErr = 'Please, fill this field - number, min length - 3 chars';
         isValid = false;
       };
       if (_this.state.itemCategory === '' || _this.state.existingCategories.indexOf(_this.state.itemCategory) === -1) {

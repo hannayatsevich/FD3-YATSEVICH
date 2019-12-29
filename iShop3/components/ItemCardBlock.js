@@ -89,8 +89,9 @@ class ItemCardBlock extends React.Component {
       itemNameErr = 'Please, fill this field - string, min length - 5 chars';
       isValid = false;
     };
-    if( this.props.cardName === 'Add new item' && (this.state.itemNumber === 0 || this.state.itemNumber === '' || this.state.existingNumbers.indexOf(Number(this.state.itemNumber)) !== -1 || isNaN(Number(this.state.itemNumber)) || this.state.itemNumber.length < 3) ) {
-      if(this.state.existingNumbers.indexOf(Number(this.state.itemNumber)) !== -1) 
+    let itemNum = Number(this.state.itemNumber);
+    if( this.state.cardName === 'Add new item' && (itemNum === 0 || this.state.itemNumber.length < 3 || this.state.existingNumbers.indexOf(itemNum) !== -1 || isNaN(itemNum)) ) {
+      if(this.state.existingNumbers.indexOf(itemNum) !== -1) 
         itemNumberErr = 'This article already exists';
       else 
         itemNumberErr = 'Please, fill this field - number, min length - 3 chars';
