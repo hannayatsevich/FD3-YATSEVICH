@@ -1,0 +1,62 @@
+.MobileClient td{
+  border: 2px solid black;
+  background-color: #d4d4d1;
+}
+.MobileClient .ActiveGreen{
+  background-color: #69d313;
+}
+.MobileClient .BlockedRed{
+  background-color: #d32913;
+}.MobileClientCard{
+  width: 90%;
+  margin: 5px auto;
+  border: solid 2px black;
+}
+.MobileClientCard p{
+  width: 30%;
+  margin: 10px auto;
+}
+.MobileClientCard p:first-child{
+  font-weight: bold;
+  text-align: center;
+}
+.MobileClientCard label{
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+.MobileClientCard input[type = 'text']{
+  float: right;
+  width: 50%;
+}
+.MobileClientCard input[type = 'button']{
+  margin: 10px;
+}body{
+  margin: 0;
+  padding: 0;
+}
+.MobileCompany{
+  position: relative;
+  background-color: #c2b898;
+  margin: 0 auto;
+  padding: 10px;
+ /* width: fit-content;/*Наибольшее из: внутренняя минимальная ширина / меньшая из внутренней предпочтительной ширины и доступной ширины*/
+  text-align: center;
+  height: 100vh;
+}
+.MobileCompany .Table{
+  border-collapse: collapse;/*убирает двойные рамки, border-spacing не работает в этом случае*/
+  width: 90%;
+  margin: 5px auto;
+}
+
+.MobileCompany .TableHead td{
+  border: 2px solid black;
+  padding: 3px;
+  width: calc(100%/7);
+  text-align: center;
+  font-weight: bold;
+  background-color: #adaba2;
+}
+
+/*# sourceMappingURL=bundle.css.map*/
