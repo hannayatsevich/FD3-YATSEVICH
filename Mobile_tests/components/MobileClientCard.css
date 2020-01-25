@@ -1,0 +1,25 @@
+.MobileClientCard{
+  width: 90%;
+  margin: 5px auto;
+  border: solid 2px black;
+}
+.MobileClientCard p{
+  width: 30%;
+  margin: 10px auto;
+}
+.MobileClientCard p:first-child{
+  font-weight: bold;
+  text-align: center;
+}
+.MobileClientCard label{
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+.MobileClientCard input[type = 'text']{
+  float: right;
+  width: 50%;
+}
+.MobileClientCard input[type = 'button']{
+  margin: 10px;
+}

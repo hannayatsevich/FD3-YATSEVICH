@@ -1,0 +1,46 @@
+{
+  "name": "mobile_tests",
+  "version": "1.0.0",
+  "description": "mobile_tests",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode development",
+    "livebuild": ".\\node_modules\\.bin\\webpack-dev-server --progress --colors",
+    "start": ".\\node_modules\\.bin\\lite-server",
+    "test": "jest"
+  },
+  "author": "hannayatsevich",
+  "license": "ISC",
+  "dependencies": {
+    "events": "^3.1.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-jest": "^21.2.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^3.4.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-to-json": "^3.4.3",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "jest": "^21.2.1",
+    "react-test-renderer": "^16.1.1",
+    "style-loader": "^1.1.2",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  }
+}

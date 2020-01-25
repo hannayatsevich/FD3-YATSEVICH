@@ -1,0 +1,27 @@
+body{
+  margin: 0;
+  padding: 0;
+}
+.MobileCompany{
+  position: relative;
+  background-color: #c2b898;
+  margin: 0 auto;
+  padding: 10px;
+ /* width: fit-content;/*Наибольшее из: внутренняя минимальная ширина / меньшая из внутренней предпочтительной ширины и доступной ширины*/
+  text-align: center;
+  height: 100vh;
+}
+.MobileCompany .Table{
+  border-collapse: collapse;/*убирает двойные рамки, border-spacing не работает в этом случае*/
+  width: 90%;
+  margin: 5px auto;
+}
+
+.MobileCompany .TableHead td{
+  border: 2px solid black;
+  padding: 3px;
+  width: calc(100%/7);
+  text-align: center;
+  font-weight: bold;
+  background-color: #adaba2;
+}
