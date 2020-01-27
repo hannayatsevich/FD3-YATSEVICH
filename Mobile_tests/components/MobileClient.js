@@ -24,13 +24,19 @@ class MobileClient extends React.PureComponent {
   };
 
   deleteClient = () => {
-    let deleteAnswer = confirm(`Do you want to delete ${this.state.clientDetails.firstName} ${this.state.clientDetails.secondName} data?`);
+    let deleteAnswer = true;
+    console.log('inside function');
+    if(typeof window !== 'undefined') {
+      console.log('inside typeof window !== "undefined"');
+      deleteAnswer = confirm(`Do you want to delete ${this.state.clientDetails.firstName} ${this.state.clientDetails.secondName} data?`);
+    };
     if(deleteAnswer) {
-      mobileEvents.emit('EDeleteClient', this.state.clientDetails.id)
+      console.log('inside deleteAnswer true/false');
+      mobileEvents.emit('EDeleteClient', this.state.clientDetails.id);
     };    
   };
   editClient = () => {
-    mobileEvents.emit('EEditClient', this.state.clientDetails.id)
+    mobileEvents.emit('EEditClient', this.state.clientDetails.id);
   };
 
   componentWillReceiveProps = (newProps) => {

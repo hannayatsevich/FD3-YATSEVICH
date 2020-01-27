@@ -54,10 +54,6 @@ class MobileClientCard extends React.PureComponent {
     let newClientDetails = {...this.state.clientDetails, provider: this.newProviderRef.value, firstName: this.newFirstNameRef.value, secondName: this.newSecondNameRef.value, tarrifPlan: this.newTarrifPlanRef.value, balance: parseInt(this.newBalanceRef.value)};
     mobileEvents.emit('ESaveClient', newClientDetails);
     mobileEvents.emit('ECloseCard');
-    /*this.setState({clientDetails: newClientDetails}, () => {
-      mobileEvents.emit('ESaveClient', this.state.clientDetails);
-      mobileEvents.emit('ECloseCard');
-    });*/
   };
   cancelChanges = () => {    
     mobileEvents.emit('ECloseCard');

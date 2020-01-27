@@ -53,53 +53,30 @@ class MobileCompany extends React.PureComponent{
     };
   };
 
-  getExistingClientsId = arrOfClients => {
-    let arrOfClientsId = arrOfClients.map( value => value.id);
-    let maxIdValue = arrOfClientsId.sort((a, b) => b - a)[0];
-    return {arr: arrOfClientsId, maxIdValue: maxIdValue};//хэш, ключ arr - массив существующих id, ключ maxIdValue - максимальное значение id (для заведения нового клиента)
-  };
-
-  //формирование отфильтрованного массива
-  setFilter = (companyName, status, otherChanges = false, clientsArray = this.state.clientsForRender) => {
-    if( (companyName !== this.state.companyName) || (status !== this.state.status) ||  otherChanges === true) {
-      let newClientsForRenderFiltered = [...clientsArray];
-      if(companyName !== 'All Companies') 
-        newClientsForRenderFiltered = newClientsForRenderFiltered.filter( value => {
-          return value.provider == companyName;
-        });
-      if(status !== 'All Clients') 
-        newClientsForRenderFiltered = newClientsForRenderFiltered.filter( value => {
-          return (value.balance <= 0 && status === 'Blocked') || (value.balance > 0 && status === 'Active');
-        });
-      return newClientsForRenderFiltered;
-    } 
-    else 
-      return this.state.clientsForRenderFiltered;   
-  };
   //фильтрация провайдера
   setAllProviders = () => {
-    let newClientsForRenderFiltered = this.setFilter('All Companies', this.state.status);
+    let newClientsForRenderFiltered = setFilterExt('All Companies', this.state.companyName, this.state.status, this.state.status, this.state.clientsForRender, this.state.clientsForRenderFiltered);
     this.setState({clientsForRenderFiltered: newClientsForRenderFiltered, companyName: 'All Companies'});
   };
   setVelcom = () => {
-    let newClientsForRenderFiltered = this.setFilter('Velcom', this.state.status);
+    let newClientsForRenderFiltered = setFilterExt('Velcom', this.state.companyName, this.state.status, this.state.status, this.state.clientsForRender, this.state.clientsForRenderFiltered);
     this.setState({clientsForRenderFiltered: newClientsForRenderFiltered, companyName: 'Velcom'});
   };
   setMTS = () => {
-    let newClientsForRenderFiltered = this.setFilter('MTS', this.state.status);
+    let newClientsForRenderFiltered = setFilterExt('MTS', this.state.companyName, this.state.status, this.state.status, this.state.clientsForRender, this.state.clientsForRenderFiltered);
     this.setState({clientsForRenderFiltered: newClientsForRenderFiltered, companyName: 'MTS'});
   };
   //фильтрация статуса
   setAllClients = () => {
-    let newClientsForRenderFiltered = this.setFilter(this.state.companyName, 'All Clients');
+    let newClientsForRenderFiltered = setFilterExt(this.state.companyName, this.state.companyName,'All Clients', this.state.status, this.state.clientsForRender, this.state.clientsForRenderFiltered);
     this.setState({clientsForRenderFiltered: newClientsForRenderFiltered, status: 'All Clients'});
   };
   setActive = () => {
-    let newClientsForRenderFiltered = this.setFilter(this.state.companyName, 'Active');
+    let newClientsForRenderFiltered = setFilterExt(this.state.companyName, this.state.companyName, 'Active', this.state.status, this.state.clientsForRender, this.state.clientsForRenderFiltered);
     this.setState({clientsForRenderFiltered: newClientsForRenderFiltered, status: 'Active'});
   };
   setBlocked = () => {
-    let newClientsForRenderFiltered = this.setFilter(this.state.companyName, 'Blocked');
+    let newClientsForRenderFiltered = setFilterExt(this.state.companyName, this.state.companyName, 'Blocked', this.state.status, this.state.clientsForRender, this.state.clientsForRenderFiltered);
     this.setState({clientsForRenderFiltered: newClientsForRenderFiltered, status: 'Blocked'});
   };
   //обработчики событий
@@ -116,34 +93,21 @@ class MobileCompany extends React.PureComponent{
     mobileEvents.removeListener('ECloseCard', this.closeCard);
   };
   deleteClient = clientId => {
-    let newClientsForRender = this.state.clientsForRender.filter( value => value.id !== clientId);//
-    let newClientsForRenderFiltered = this.setFilter(this.state.companyName, this.state.status, true, newClientsForRender);
+    let newClientsForRender = deleteEditClientExt(clientId, this.state.clientsForRender, 'Delete');
+    let newClientsForRenderFiltered = setFilterExt(this.state.companyName, this.state.companyName, this.state.status, this.state.status, newClientsForRender, this.state.clientsForRenderFiltered, true);
     this.setState({clientsForRender: newClientsForRender, clientsForRenderFiltered: newClientsForRenderFiltered});
   };
   editClient = clientId => {
-    let editableClientData = this.state.clientsForRender.filter( value => value.id === clientId);
-    this.setState({isEditable: true, isNewClient: false, editableClientData: editableClientData[0]});
+    let editableClientData = deleteEditClientExt(clientId, this.state.clientsForRender, 'Edit');
+    this.setState({isEditable: true, isNewClient: false, editableClientData: editableClientData});
   };
   saveClient = clientDetails => {
-    let existingClientsId = this.getExistingClientsId(this.state.clientsForRender);
-    if(existingClientsId.arr.indexOf(clientDetails.id) !== -1) {
-      let editableClientPosition = this.state.clientsForRender.findIndex( value => value.id === clientDetails.id);
-      let newClientsForRender = [...this.state.clientsForRender];
-      newClientsForRender[editableClientPosition] = clientDetails;
-      let newClientsForRenderFiltered = this.setFilter(this.state.companyName, this.state.status, true, newClientsForRender);
-      this.setState({clientsForRender: newClientsForRender, clientsForRenderFiltered: newClientsForRenderFiltered});
-    }
-    else {      
-      clientDetails.id = existingClientsId.maxIdValue + 1;
-      let newClientsForRender = [...this.state.clientsForRender, clientDetails];
-      let newClientsForRenderFiltered = this.setFilter(this.state.companyName, this.state.status, true, newClientsForRender);
-      this.setState({clientsForRender: newClientsForRender, clientsForRenderFiltered: newClientsForRenderFiltered});
-    }
+    let newClients = saveClientExt(clientDetails, this.state.clientsForRender, this.state.clientsForRenderFiltered, this.state.companyName, this.state.status);
+    this.setState({clientsForRender: newClients.clientsForRender, clientsForRenderFiltered: newClients.clientsForRenderFiltered});    
   };
   closeCard = () => {
     this.setState({isEditable: false, isNewClient: false, editableClientData: null});
   };
-
   addNewClient = () => {
     let defaultClientData = {...this.state.defaultClientData};
     this.setState({isNewClient: true, isEditable: false, defaultClientData: defaultClientData, editableClientData: null});
@@ -192,4 +156,58 @@ class MobileCompany extends React.PureComponent{
   };
 };
 
+function getExistingClientsId (arrOfClients) {
+  let arrOfClientsId = arrOfClients.map( value => value.id);
+  let maxIdValue = arrOfClientsId.sort((a, b) => b - a)[0];
+  return {arr: arrOfClientsId, maxIdValue: maxIdValue};//хэш, ключ arr - массив существующих id, ключ maxIdValue - максимальное значение id (для заведения нового клиента)
+};
+
+//формирование отфильтрованного массива
+function setFilterExt (newCompanyName, stateCompanyName, newStatus, stateStatus, clientsArray, stateClientsFilteredArray, otherChanges = false) {
+  if( (newCompanyName !== stateCompanyName) || (newStatus !== stateStatus) ||  otherChanges === true) {
+    let newClientsForRenderFiltered = [...clientsArray];
+    if(newCompanyName !== 'All Companies') 
+      newClientsForRenderFiltered = newClientsForRenderFiltered.filter( value => {
+        return value.provider == newCompanyName;
+      });
+    if(newStatus !== 'All Clients') 
+      newClientsForRenderFiltered = newClientsForRenderFiltered.filter( value => {
+        return (value.balance <= 0 && newStatus === 'Blocked') || (value.balance > 0 && newStatus === 'Active');
+      });
+    return newClientsForRenderFiltered;
+  } 
+  else 
+    return stateClientsFilteredArray;   
+};
+
+function saveClientExt(clientDetails, stateClientsForRender, stateClientsFilteredArray, stateCompanyName, stateStatus){
+  let existingClientsId = getExistingClientsId(stateClientsForRender);
+  if(existingClientsId.arr.indexOf(clientDetails.id) !== -1) {
+    let editableClientPosition = stateClientsForRender.findIndex( value => value.id === clientDetails.id);
+    let newClientsForRender = [...stateClientsForRender];
+    newClientsForRender[editableClientPosition] = clientDetails;
+    let newClientsForRenderFiltered = setFilterExt(stateCompanyName, stateCompanyName, stateStatus, stateStatus, newClientsForRender, stateClientsFilteredArray, true);
+    return {clientsForRender: newClientsForRender, clientsForRenderFiltered: newClientsForRenderFiltered};
+  }
+  else {      
+    clientDetails.id = existingClientsId.maxIdValue + 1;
+    let newClientsForRender = [...stateClientsForRender, clientDetails];
+    let newClientsForRenderFiltered = setFilterExt(stateCompanyName, stateCompanyName, stateStatus, stateStatus, newClientsForRender, stateClientsFilteredArray, true);
+    return {clientsForRender: newClientsForRender, clientsForRenderFiltered: newClientsForRenderFiltered};
+  }
+};
+
+function deleteEditClientExt (clientId, stateClientsForRender, mode) {
+  if(mode === 'Delete') {
+    let newClientsForRender = stateClientsForRender.filter( value => value.id !== clientId);
+    return newClientsForRender;    
+  };
+  if(mode === 'Edit') {
+    let editableClientData = stateClientsForRender.filter( value => value.id === clientId);
+    return editableClientData[0];
+  };
+};
+
 export default MobileCompany;
+
+export {getExistingClientsId, setFilterExt, saveClientExt, deleteEditClientExt};
