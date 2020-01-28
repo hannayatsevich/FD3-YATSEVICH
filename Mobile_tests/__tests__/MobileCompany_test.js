@@ -45,16 +45,23 @@ test('проверка работы рендеринга MobileCompany', () => {
   cancelEditingClientBtn.props.onClick();
   //снэпшот5
   compMobileCompanyTree = compMobileCompany.toJSON();
-  expect(compMobileCompany).toMatchSnapshot(); 
+  expect(compMobileCompany).toMatchSnapshot();   
   
-  global.confirm = () => true;
-  //spyOn(window, 'confirm').andReturn(true);
+  /*var 1: const originalConfirm = window.confirm;
+  //const mockedConfirm = jest.fn(() => true);
+  window.confirm = ()=>true;*/
+  /*var 2:  const spy = jest.spyOn(window, 'confirm').mockReturnValue(true);*/
+  
   //удаление 1го клиента по кнопке
   const deleteClientBtn = compMobileCompany.root.findAll( el => el.type == 'input'&& el.props.value === 'Delete');
-  deleteClientBtn[0].props.onClick();
+  deleteClientBtn[0].props.onClick();  
   //снэпшот6
   compMobileCompanyTree = compMobileCompany.toJSON();
-  expect(compMobileCompany).toMatchSnapshot();   
+  expect(compMobileCompany).toMatchSnapshot(); 
+  
+  /*var 1: window.confirm = originalConfirm;*/
+  /*var 2:  spy.mockRestore();*/
+  
 });
 
 
