@@ -45,6 +45,7 @@ var Product = /** @class */ (function () {
     function Product(name, weight) {
         this.weight = weight;
         this.name = name;
+        Product.numOfProducts += 1;
     }
     ;
     Product.prototype.getScale = function () {
@@ -60,9 +61,7 @@ var Product = /** @class */ (function () {
 var Apple = /** @class */ (function (_super) {
     __extends(Apple, _super);
     function Apple(name, weight) {
-        var _this = _super.call(this, name, weight) || this;
-        Product.numOfProducts += 1;
-        return _this;
+        return _super.call(this, name, weight) || this;
     }
     ;
     return Apple;
@@ -71,9 +70,7 @@ var Apple = /** @class */ (function (_super) {
 var Tomato = /** @class */ (function (_super) {
     __extends(Tomato, _super);
     function Tomato(name, weight) {
-        var _this = _super.call(this, name, weight) || this;
-        Product.numOfProducts += 1;
-        return _this;
+        return _super.call(this, name, weight) || this;
     }
     ;
     return Tomato;
@@ -82,9 +79,7 @@ var Tomato = /** @class */ (function (_super) {
 var Blueberies = /** @class */ (function (_super) {
     __extends(Blueberies, _super);
     function Blueberies(name, weight) {
-        var _this = _super.call(this, name, weight) || this;
-        Product.numOfProducts += 1;
-        return _this;
+        return _super.call(this, name, weight) || this;
     }
     ;
     return Blueberies;

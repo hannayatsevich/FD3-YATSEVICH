@@ -31,6 +31,7 @@ class Product {
   constructor(name:string, weight:number){
     this.weight = weight;
     this.name = name;
+    Product.numOfProducts +=1;
   };
   getScale():number{
     return this.weight;
@@ -43,19 +44,16 @@ class Product {
 class Apple extends Product {
   constructor(name:string, weight:number){
     super(name, weight);
-    Product.numOfProducts +=1;
   };
 };
 class Tomato extends Product {
   constructor(name:string, weight:number){
     super(name, weight);
-    Product.numOfProducts +=1;
   };
 };
 class Blueberies extends Product {
   constructor(name:string, weight:number){
     super(name, weight);
-    Product.numOfProducts +=1;
   };
 };
 
