@@ -1,7 +1,7 @@
 'use strict';
 
 class Scales {
-  productsOnScales:Array<Product> = [];
+  productsOnScales:Array<Product> = [];//либо в конструкторе
 
   add(product:Product):void{
     this.productsOnScales.push(product);
@@ -11,7 +11,7 @@ class Scales {
     /*for(let i:number = 0; i < this.productsOnScales.length; i++){
       sumScale += this.productsOnScales[i].getScale();
     };*/
-    this.productsOnScales.forEach((product:Product) => sumScale += product.getScale())
+    this.productsOnScales.forEach((product:Product) => {sumScale += product.getScale()})//так как стрелочная ф-я ничего не возвращает, а только делает расчет, для читабельности уместно поместить выражение в фигурные скобки
     return sumScale;
   };
   getNameList():Array<string>{
@@ -40,7 +40,8 @@ class Product {
     return this.name;
   }
 };
-
+//в классах ниже можно не описывать конструктор, аргумены автоматически попадут в нужные переменные
+//либо передать вес, а имя задать внутри, напр, в классе Apple у всех экземпляров имя 'apple'
 class Apple extends Product {
   constructor(name:string, weight:number){
     super(name, weight);
