@@ -85,14 +85,9 @@ var ScalesStorageEngineLocalStorage = /** @class */ (function () {
             try {
                 var products = JSON.parse(storageCheck); //Array<any>/any
                 if (Array.isArray(products)) {
-                    var productsOfProduct = [];
-                    for (var i = 0; i < products.length; i++) {
-                        productsOfProduct.push(new Product(products[i].weight, products[i].name));
-                    }
-                    ;
-                    var index = productsOfProduct.length;
-                    productsOfProduct.push(item);
-                    window.localStorage.setItem(this.storageName, JSON.stringify(productsOfProduct));
+                    var index = products.length;
+                    products.push(item);
+                    window.localStorage.setItem(this.storageName, JSON.stringify(products));
                     return index;
                 }
                 else
@@ -112,12 +107,7 @@ var ScalesStorageEngineLocalStorage = /** @class */ (function () {
             try {
                 var products = JSON.parse(storageCheck);
                 if (Array.isArray(products)) {
-                    var productsOfProduct = [];
-                    for (var i = 0; i < products.length; i++) {
-                        productsOfProduct.push(new Product(products[i].weight, products[i].name));
-                    }
-                    ;
-                    return productsOfProduct[index];
+                    return new Product(products[index].weight, products[index].name);
                 }
                 else
                     throw "\u0412 localStorage \u043F\u043E\u0434 \u0438\u043C\u0435\u043D\u0435\u043C " + this.storageName + " \u0445\u0440\u0430\u043D\u0438\u0442\u0441\u044F \u043D\u0435 \u043C\u0430\u0441\u0441\u0438\u0432";
@@ -136,12 +126,7 @@ var ScalesStorageEngineLocalStorage = /** @class */ (function () {
             try {
                 var products = JSON.parse(storageCheck);
                 if (Array.isArray(products)) {
-                    var productsOfProduct = [];
-                    for (var i = 0; i < products.length; i++) {
-                        productsOfProduct.push(new Product(products[i].weight, products[i].name));
-                    }
-                    ;
-                    return productsOfProduct.length;
+                    return products.length;
                 }
                 else
                     throw "\u0412 localStorage \u043F\u043E\u0434 \u0438\u043C\u0435\u043D\u0435\u043C " + this.storageName + " \u0445\u0440\u0430\u043D\u0438\u0442\u0441\u044F \u043D\u0435 \u043C\u0430\u0441\u0441\u0438\u0432";

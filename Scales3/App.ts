@@ -69,13 +69,9 @@ class ScalesStorageEngineLocalStorage implements IStorageEngine {
       try {
         let products = JSON.parse(storageCheck);//Array<any>/any
         if(Array.isArray(products)) {
-          let productsOfProduct:Array<Product> = [];
-          for (let i:number = 0; i < products.length; i++) {
-            productsOfProduct.push(new Product(products[i].weight, products[i].name));
-          };
-          let index:number = productsOfProduct.length;
-          productsOfProduct.push(item);
-          window.localStorage.setItem(this.storageName, JSON.stringify(productsOfProduct));
+          let index:number = products.length;
+          products.push(item);
+          window.localStorage.setItem(this.storageName, JSON.stringify(products));
           return index;
         }
         else
@@ -92,11 +88,7 @@ class ScalesStorageEngineLocalStorage implements IStorageEngine {
       try {
         let products = JSON.parse(storageCheck);
         if(Array.isArray(products)) {
-          let productsOfProduct:Array<Product> = [];
-          for (let i:number = 0; i < products.length; i++) {
-            productsOfProduct.push(new Product(products[i].weight, products[i].name));
-          };
-          return productsOfProduct[index];
+          return new Product(products[index].weight, products[index].name);
         }
         else
           throw `В localStorage под именем ${this.storageName} хранится не массив`; 
@@ -112,11 +104,7 @@ class ScalesStorageEngineLocalStorage implements IStorageEngine {
       try {
         let products = JSON.parse(storageCheck);
         if(Array.isArray(products)) {
-          let productsOfProduct:Array<Product> = [];
-          for (let i:number = 0; i < products.length; i++) {
-            productsOfProduct.push(new Product(products[i].weight, products[i].name));
-          };
-          return productsOfProduct.length;
+          return products.length;
         }
         else
           throw `В localStorage под именем ${this.storageName} хранится не массив`;
