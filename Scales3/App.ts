@@ -4,7 +4,8 @@ class Product {
   private static numOfProducts:number = 0;
   constructor(private weight:number, private name?:string) {
     if(!name) {
-      this.name = (Product.numOfProducts++, 'Product' + Product.numOfProducts);
+      //this.name = (Product.numOfProducts++, 'Product' + Product.numOfProducts);
+      this.name = 'Product' + (++Product.numOfProducts);
     };    
   };
   getScale():number{
@@ -22,19 +23,21 @@ interface IStorageEngine {
 };
 
 class Scales<StorageEngine extends IStorageEngine> {
-  getSumScale(products:StorageEngine):number{
+  constructor(private products:StorageEngine){
+  };
+  getSumScale():number{
     let sumScale:number = 0;
-    let elements:number = products.getCount();
+    let elements:number = this.products.getCount();
     for (let i:number = 0; i < elements; i++) {
-      sumScale += products.getItem(i).getScale();
+      sumScale += this.products.getItem(i).getScale();
     };
     return sumScale;
   };
-  getNameList(products:StorageEngine):Array<string>{
+  getNameList():Array<string>{
     let productNamesArr:Array<string> = [];
-    let elements:number = products.getCount();
+    let elements:number = this.products.getCount();
     for (let i:number = 0; i < elements; i++) {
-      productNamesArr.push(products.getItem(i).getName());
+      productNamesArr.push(this.products.getItem(i).getName());
     };
     return productNamesArr;
   };
@@ -64,15 +67,19 @@ class ScalesStorageEngineLocalStorage implements IStorageEngine {
     let storageCheck:string = window.localStorage.getItem(this.storageName);
     if(storageCheck) {
       try {
-        let products:Array<any> = JSON.parse(storageCheck);//?
-        let productsOfProduct:Array<Product> = [];
-        for (let i:number = 0; i < products.length; i++) {
-          productsOfProduct.push(new Product(products[i].weight, products[i].name));
-        };
-        let index:number = productsOfProduct.length;
-        productsOfProduct.push(item);
-        window.localStorage.setItem(this.storageName, JSON.stringify(productsOfProduct));
-        return index;
+        let products = JSON.parse(storageCheck);//Array<any>/any
+        if(Array.isArray(products)) {
+          let productsOfProduct:Array<Product> = [];
+          for (let i:number = 0; i < products.length; i++) {
+            productsOfProduct.push(new Product(products[i].weight, products[i].name));
+          };
+          let index:number = productsOfProduct.length;
+          productsOfProduct.push(item);
+          window.localStorage.setItem(this.storageName, JSON.stringify(productsOfProduct));
+          return index;
+        }
+        else
+          throw `В localStorage под именем ${this.storageName} хранится не массив`;        
       }
       catch (error) {
         console.log(`Произошла ошибка, Name: ${error.name}, Message: ${error.message}`);
@@ -83,12 +90,16 @@ class ScalesStorageEngineLocalStorage implements IStorageEngine {
     let storageCheck:string = window.localStorage.getItem(this.storageName);
     if(storageCheck) {
       try {
-        let products:Array<any> = JSON.parse(storageCheck);
-        let productsOfProduct:Array<Product> = [];
-        for (let i:number = 0; i < products.length; i++) {
-          productsOfProduct.push(new Product(products[i].weight, products[i].name));
-        };
-        return productsOfProduct[index];
+        let products = JSON.parse(storageCheck);
+        if(Array.isArray(products)) {
+          let productsOfProduct:Array<Product> = [];
+          for (let i:number = 0; i < products.length; i++) {
+            productsOfProduct.push(new Product(products[i].weight, products[i].name));
+          };
+          return productsOfProduct[index];
+        }
+        else
+          throw `В localStorage под именем ${this.storageName} хранится не массив`; 
       }
       catch (error) {
         console.log(`Произошла ошибка, Name: ${error.name}, Message: ${error.message}`);
@@ -99,12 +110,16 @@ class ScalesStorageEngineLocalStorage implements IStorageEngine {
     let storageCheck = window.localStorage.getItem(this.storageName);
     if(storageCheck) {
       try {
-        let products:Array<any> = JSON.parse(storageCheck);
-        let productsOfProduct:Array<Product> = [];
-        for (let i:number = 0; i < products.length; i++) {
-          productsOfProduct.push(new Product(products[i].weight, products[i].name));
-        };
-        return productsOfProduct.length;
+        let products = JSON.parse(storageCheck);
+        if(Array.isArray(products)) {
+          let productsOfProduct:Array<Product> = [];
+          for (let i:number = 0; i < products.length; i++) {
+            productsOfProduct.push(new Product(products[i].weight, products[i].name));
+          };
+          return productsOfProduct.length;
+        }
+        else
+          throw `В localStorage под именем ${this.storageName} хранится не массив`;
       }
       catch (error) {
         console.log(`Произошла ошибка, Name: ${error.name}, Message: ${error.message}`);
@@ -125,10 +140,10 @@ let product2Index:number = newStorageEngineArray.addItem(product2);
 let product3Index:number = newStorageEngineArray.addItem(product3);
 let product4Index:number = newStorageEngineArray.addItem(product4);
 
-let scalesArr = new Scales<ScalesStorageEngineArray>();
+let scalesArr = new Scales<ScalesStorageEngineArray>(newStorageEngineArray);
 
-console.log(scalesArr.getNameList(newStorageEngineArray));
-console.log(scalesArr.getSumScale(newStorageEngineArray));
+console.log(scalesArr.getNameList());
+console.log(scalesArr.getSumScale());
 
 let product5 = new Product(500);
 let product6 = new Product(300);
@@ -142,7 +157,7 @@ let product6Index:number = newStorageEngineLocalStorage.addItem(product6);
 let product7Index:number = newStorageEngineLocalStorage.addItem(product7);
 let product8Index:number = newStorageEngineLocalStorage.addItem(product8);
 
-let scalesLocStorage = new Scales<ScalesStorageEngineLocalStorage>();
+let scalesLocStorage = new Scales<ScalesStorageEngineLocalStorage>(newStorageEngineLocalStorage);
 
-console.log(scalesLocStorage.getNameList(newStorageEngineLocalStorage));
-console.log(scalesLocStorage.getSumScale(newStorageEngineLocalStorage));
+console.log(scalesLocStorage.getNameList());
+console.log(scalesLocStorage.getSumScale());
